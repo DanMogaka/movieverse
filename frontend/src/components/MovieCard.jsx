@@ -1,10 +1,14 @@
+const API_URL = import.meta.env.VITE_API_URL;
+
 function MovieCard({ movie, onFavoriteClick, isFavorite, user }) {
+  const imageUrl = movie.picture ? `${API_URL}${movie.picture}` : null;
+
   return (
     <div className="bg-gray-900 text-white rounded-lg overflow-hidden shadow-md">
       <div className="h-80 bg-gray-700">
-        {movie.picture ? (
+        {imageUrl ? (
           <img
-            src={`http://localhost:8080${movie.picture}`}
+            src={imageUrl}
             alt={movie.title}
             className="w-full h-full object-cover"
           />

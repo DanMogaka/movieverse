@@ -4,10 +4,13 @@ import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import authRoutes from "./routes/auth.js";
 import movieRoutes from "./routes/movies.js";
+import path from "path";
 
 dotenv.config();
 
 const app = express();
+
+app.use("/images", express.static(path.join(process.cwd(), "public/images")));
 
 app.use(
   cors({
