@@ -93,7 +93,7 @@ router.post("/login", async (req, res) => {
 
 // Route for logged in user from the protect middleware
 router.get("/me", protect, async (req, res) => {
-  res.json(req.user);
+  res.json({ user: req.user });
 });
 
 router.post("/logout", (req, res) => {
