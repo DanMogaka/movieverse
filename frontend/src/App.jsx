@@ -5,7 +5,7 @@ import {
   Route,
   Navigate,
 } from "react-router-dom";
-import axios from "axios";
+import api from "./services/api.js";
 
 import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
@@ -13,9 +13,6 @@ import Login from "./pages/Login";
 import Favorites from "./pages/Favorites";
 import Register from "./pages/Register";
 import NotFound from "./components/NotFound";
-
-// Sending cookies with every request automatically (identify logged in user)
-axios.defaults.withCredentials = true;
 
 function App() {
   const [user, setUser] = useState(null);
@@ -39,7 +36,7 @@ function App() {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const res = await axios.get("/api/auth/me");
+        const res = await api.get("/api/auth/me");
         setUser(res.data.user);
       } catch (err) {
         setUser(null);

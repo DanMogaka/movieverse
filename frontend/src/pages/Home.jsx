@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+import api from "./../services/api.js";
 import MovieCard from "../components/MovieCard";
 
 function Home({ user, favorites, onFavoriteClick }) {
@@ -9,7 +9,7 @@ function Home({ user, favorites, onFavoriteClick }) {
   useEffect(() => {
     const fetchMovies = async () => {
       try {
-        const res = await axios.get("/api/movies");
+        const res = await api.get("/api/movies");
         setMovies(res.data);
       } catch (err) {
         console.error("Error fetching movies:", err);
