@@ -1,14 +1,17 @@
 import axios from "axios";
-import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 const Navbar = ({ user, setUser }) => {
   const navigate = useNavigate();
 
   const handleLogout = async () => {
-    await axios.post("http://localhost:8080/api/auth/logout");
-    setUser(null);
-    navigate("/");
+    try {
+      await axios.post("/api/auth/logout");
+      setUser(null);
+      navigate("/");
+    } catch (err) {
+      console.error("Logout failed:", err);
+    }
   };
 
   return (
@@ -17,22 +20,23 @@ const Navbar = ({ user, setUser }) => {
         <Link to="/" className="font-bold">
           MovieVerse
         </Link>
-        <div>
+
+        <div className="flex items-center gap-4">
           {user ? (
-            <button
-              onClick={handleLogout}
-              className="bg-red-500 px-3 py-1 rounded"
-            >
-              Logout
-            </button>
+            <>
+              <Link to="/favorites">Favorites</Link>
+              <Link to="/watchlist">Watchlist</Link>
+              <button
+                onClick={handleLogout}
+                className="bg-red-500 px-3 py-1 rounded"
+              >
+                Logout
+              </button>
+            </>
           ) : (
             <>
-              <Link to="/login" className="mx-2">
-                Login
-              </Link>
-              <Link to="/register" className="mx-2">
-                Register
-              </Link>
+              <Link to="/login">Login</Link>
+              <Link to="/register">Register</Link>
             </>
           )}
         </div>
