@@ -9,7 +9,8 @@ const router = express.Router();
 const cookieOptions = {
   httpOnly: true,
   secure: process.env.NODE_ENV === "production", // Only send cookies over https during production
-  sameSite: "Strict", // prevent crsf attacks
+  //* sameSite: "Strict", // prevent crsf attacks */
+  sameSite: process.env.NODE_ENV === "production" ? "None" : "Strict",
   maxAge: 15 * 60 * 1000, // Cookies expires after 15 mins
 };
 
@@ -97,7 +98,8 @@ router.get("/me", protect, async (req, res) => {
 });
 
 router.post("/logout", (req, res) => {
-  res.cookie("token", "", { ...cookieOptions, maxAge: 1 });
+  // res.cookie("token", "", { ...cookieOptions, maxAge: 1 });
+  res.clearCookie("token", cookieOptions);
   res.json({ message: "Logged out successfuly" });
 });
 
